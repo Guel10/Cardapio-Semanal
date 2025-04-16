@@ -1,7 +1,12 @@
 package Cardapio;
+import Cardapio.Alimentos;
 
+import javax.management.StringValueExp;
+import javax.print.DocFlavor;
+import javax.swing.text.StringContent;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.StringJoiner;
 
 public class Refeicao extends Alimentos {
     enum diasDaSemana {
@@ -21,22 +26,52 @@ public class Refeicao extends Alimentos {
                 System.out.println("--- Dia: " + diasDaSemana.values()[dia] + "---");
                 System.out.println("--- Turno: " + turnoDaSemana.values()[turno] + "---");
 
-                saladas.forEach((k, v) -> System.out.println(k + " - " + v));
-                System.out.println("Escolha sua salada: ");
-                int escolhaSalada = entrada.nextInt();
+                int escolhaSalada;
+                while (true) {
+                    saladas.forEach((k, v) -> System.out.println(k + " - " + v));
+                    System.out.print("Escolha sua salada: ");
+                    String input = entrada.next();
+                    try {
+                        escolhaSalada = Integer.parseInt(input);
+                        if (saladas.containsKey(escolhaSalada)) break;
+                        else System.out.println("Opção inválida! Tente novamente.");
+                    } catch (NumberFormatException e) {
+                        System.out.println("Opção inválida! Tente novamente.");
+                    }
+                }
                 String saladaEscolhida = saladas.get(escolhaSalada);
 
-                pratos.forEach((k, v) -> System.out.println(k + " - " + v));
-                System.out.println("Escolha sua Prato Principal: ");
-                int escolhaPrato = entrada.nextInt();
-                String pratoEscolhido = pratos.get(escolhaPrato);
+                int escolhaPratoPrincipal;
+                while (true) {
+                    pratos.forEach((k,v) -> System.out.println(k + " - " + v) );
+                    System.out.println("Escolha seu prato principal: ");
+                    String input2 = entrada.next();
+                    try {
+                        escolhaPratoPrincipal = Integer.parseInt(input2);
+                        if (pratos.containsKey(escolhaPratoPrincipal)) break;
+                        else System.out.println("Opção inválida. Tente Novamente.");
+                    } catch (NumberFormatException e) {
+                        System.out.println("Opção inválida. Tente Novamente.");
+                    }
+                }
+                String pratoEscolhido = pratos.get(escolhaPratoPrincipal);
 
-                acompanhamentos.forEach((k, v) -> System.out.println(k + " - " + v));
-                System.out.println("Escolha sua Acompanhamentos: ");
-                Integer escolhaAcompanhamento = entrada.nextInt();
-                String acompanhamentoEscolhido = acompanhamentos.get(escolhaSalada);
+                int escolhaAcompanhamento;
+                while (true) {
+                    pratos.forEach((k,v) -> System.out.println(k + " - "+ v));
+                    System.out.println("Escolha seu acompanhamento: ");
+                    String input3 = entrada.next();
+                    try {
+                        escolhaAcompanhamento = Integer.parseInt(input3);
+                        if (acompanhamentos.containsKey(escolhaAcompanhamento)) break;
+                        else System.out.println("Opçãio inválida! Tente Novamente.");
+                    } catch (NumberFormatException e) {
+                        System.out.println("Opção inválida! Tente Novamente.");
+                    }
+                }
+                String acompanhamentoEscolhido = acompanhamentos.get(escolhaAcompanhamento);
 
-                String refeicao = diasDaSemana.values()[dia] + "[" + turnoDaSemana.values()[turno] + "]" +" | Salada: " + saladaEscolhida +
+                String refeicao = diasDaSemana.values()[dia] + "[" + turnoDaSemana.values()[turno] + "]" + " | Salada: " + saladaEscolhida +
                         "| Prato: " + pratoEscolhido +
                         "| Acompanhamento: " + acompanhamentoEscolhido;
                 cardapioSemanal.add(refeicao);
